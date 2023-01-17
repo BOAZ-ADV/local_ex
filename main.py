@@ -7,6 +7,8 @@ from audio_recorder_streamlit import audio_recorder
 import STT
 from time import time, sleep
 
+text_data = []
+
 def speech_to_text(DIR: str):
     id = STT.BitoPost(DIR)
     sleep(5)
@@ -23,7 +25,9 @@ def main():
 
         with open("audio.wav", "wb") as f:
             f.write(audio_bytes)
-        st.markdown(f'결과: {speech_to_text("audio.wav")}')
+        text_result = speech_to_text("audio.wav")
+        text_data.append(text_result)
+        st.markdown(f'결과: {text_result}')
     
 
 
