@@ -2,7 +2,6 @@ import streamlit as st
 from audio_recorder_streamlit import audio_recorder
 from io import BytesIO
 from pydub import AudioSegment
-import pydub
 import speech_recognition as sr
 
 # import numpy as np
