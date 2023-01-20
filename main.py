@@ -77,7 +77,6 @@ def main():
         for _ in range(5):
             with open("audio.wav", "wb") as f:
                 f.write(audio_bytes)
-            time.sleep(5)
             text_result = speech_to_text("audio.wav")
             text_data.append(text_result)
             st.markdown(f'결과: {text_result}')
