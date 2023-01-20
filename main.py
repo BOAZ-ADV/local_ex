@@ -23,8 +23,8 @@ def main():
     text_data = []
     st.title('👮보이스피싱 잡아라👮')
     audio_bytes = audio_recorder("Click to record", pause_threshold=100.0)
-    with open("audio.wav", "wb") as f:
-        if audio_bytes:
+    if audio_bytes:
+        with open("audio.wav", "wb") as f:
             for _ in range(5):
                 sleep(5)
                 f.write(audio_bytes)
