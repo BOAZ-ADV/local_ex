@@ -25,6 +25,7 @@ def main():
     if audio_bytes:
         with open("audio.wav", "wb") as f:
             f.write(audio_bytes)
+        st.text('recording')
         text_result = speech_to_text("audio.wav")
         text_data.append(text_result)
         st.markdown(f'결과: {text_result}')
