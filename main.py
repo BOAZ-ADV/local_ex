@@ -21,17 +21,20 @@ def speech_to_text(DIR: str):
 
 def main():
     text_data = []
+    text_output = st.empty()
     st.title('👮보이스피싱 잡아라👮')
     audio_bytes = audio_recorder("Click to record", pause_threshold=100.0)
-    if audio_bytes:
-        with open("audio.wav", "wb") as f:
-            for _ in range(5):
+    with open("audio.wav", "wb") as f:
+        while True:
+            if audio_bytes:
+            
                 sleep(5)
                 f.write(audio_bytes)
                 text_result = speech_to_text("audio.wav")
                 text_data.append(text_result)
-                st.markdown(f'결과: {text_data}')
-    
+                # st.markdown(f'결과: {text_data}')
+                text_output.markdown(f"**Text:** {text_data}")
+
 
 
 if __name__ == "__main__":
