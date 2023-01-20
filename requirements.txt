@@ -3,5 +3,5 @@ streamlit==1.17.0
 streamlit-audiorecorder==0.0.2
 pydub==0.25.1
 SpeechRecognition==3.9.0
-pyaudio
+pyaudio==0.2.11
 wave
