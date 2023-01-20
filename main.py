@@ -22,12 +22,14 @@ def speech_to_text(DIR: str):
 def main():
     st.title('👮보이스피싱 잡아라👮')
     audio_bytes = audio_recorder("Click to record", pause_threshold=100.0)
-    if audio_bytes:
-        with open("audio.wav", "wb") as f:
-            f.write(audio_bytes)
-        text_result = speech_to_text("audio.wav")
-        text_data.append(text_result)
-        st.markdown(f'결과: {text_result}')
+    with open("audio.wav", "wb") as f:
+        if audio_bytes:
+            for _ in range(5):
+                time.sleep(5)
+                f.write(audio_bytes)
+                text_result = speech_to_text("audio.wav")
+                text_data.append(text_result)
+                st.markdown(f'결과: {text_result}')
     
 
 
