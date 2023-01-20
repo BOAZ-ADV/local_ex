@@ -25,7 +25,7 @@ def main():
     with open("audio.wav", "wb") as f:
         if audio_bytes:
             for _ in range(5):
-                time.sleep(5)
+                sleep(5)
                 f.write(audio_bytes)
                 text_result = speech_to_text("audio.wav")
                 text_data.append(text_result)
