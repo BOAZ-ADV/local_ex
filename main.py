@@ -46,14 +46,14 @@ def main():
     df.columns = ['second', 'prob']
     fig = px.bar(pd.DataFrame(df), x='second', y='prob')
     
-    tab1, tab2 = st.tabs(["output text", "probablity plot"])
+    tab1, tab2 = st.tabs(["output text", "plot"])
     with tab1:
         st.markdown(f'결과: {text_data}')
     with tab2:
-        st.plotly_chart(fig, theme="streamlit")
+        st.plotly_chart(fig, theme="None")
 
     # fig = go.Figure(go.Scatter(x = list(result_dict.keys()),y = list(result_dict.values())))
-    st.plotly_chart(fig)
+    # st.plotly_chart(fig)
 
 
 if __name__ == "__main__":
