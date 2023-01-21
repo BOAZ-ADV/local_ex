@@ -1,6 +1,6 @@
 import streamlit as st
 from audio_recorder_streamlit import audio_recorder
-import plotly.graph_objects as go
+import plotly.express as px
 import joblib
 # from io import BytesIO
 # from pydub import AudioSegment
@@ -8,6 +8,7 @@ import joblib
 
 import STT
 from time import time, sleep
+import pandas as pd
 
 text_data = []
 
@@ -30,7 +31,7 @@ def main():
         # st.text('recording')
     text_result = speech_to_text("audio.wav")
     text_data.append(text_result)
-    st.markdown(f'결과: {text_data}')
+    
 
     second = 0
     model = joblib.load('best_f1_model.pkl')
@@ -40,8 +41,18 @@ def main():
     prob = array[0][0]
     second +=10
     result_dict[second] = prob
+
+    df = pd.DataFrame.from_dict([result_dict]).transpose().reset_index()
+    df.columns = ['second', 'prob']
+    fig = px.bar(pd.DataFrame(df), x='second', y='prob')
     
-    fig = go.Figure(go.Scatter(x = list(result_dict.keys()),y = list(result_dict.values())))
+    tab1, tab2 = st.tabs(["output text", "probablity plot"])
+    with tab1:
+        st.markdown(f'결과: {text_data}')
+    with tab2:
+        st.plotly_chart(fig, theme="streamlit")
+
+    # fig = go.Figure(go.Scatter(x = list(result_dict.keys()),y = list(result_dict.values())))
     st.plotly_chart(fig)
 
 
