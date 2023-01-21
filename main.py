@@ -86,7 +86,7 @@ def main():
 
 
         df = pd.DataFrame.from_dict([result_dict]).transpose().reset_index()
-        df.columns = ['second', 'prob']
+        df.columns = ['text_length', 'prob']
         st.dataframe(df)
         fig = px.bar(df, x='text_length', y='prob')
         
