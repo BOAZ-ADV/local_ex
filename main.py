@@ -9,6 +9,7 @@ from pydub import AudioSegment
 import STT
 from time import time, sleep
 import pandas as pd
+import math
 # import librosa
 
 text_data = []
@@ -44,13 +45,21 @@ def chop_audio(file_path, segment_size):
     chopped_audio = [x for x in audio_data[::segment_size]]
     return chopped_audio
 
+def trim_audio(audio_data, second):
+    second = 1
+    seconds = second * 1000
+    slice = []
+    for i in range(int(math.ceil(len(audio_data)/seconds))):
+        slice.append(audio_data[i*seconds:seconds*(i+1)])
+    #     slice.export('newSong_{}.mp3'.format(i), format="mp3")
+    return slice
+
 
 
 def main():
     st.title('👮보이스피싱 잡아라👮')
     audio_bytes = audio_recorder("Click to record", pause_threshold=100.0)
     if audio_bytes:
-        # st.text('start')
         with open("audio.wav", "wb") as f:
             f.write(audio_bytes)
         # st.text('recording')
@@ -58,19 +67,25 @@ def main():
         # text_data.append(text_result)
         text_data = []
         result_dict = {}
-        for audio in chop_audio('audio.wav', 5):
+        # chop_audios = chop_audio('audio.wav', 5)
+        trim_audios = trim_audio('audio.wav', 5)
+        for audio in trim_audios:
             # start = 0
             end = 5
             st.text('start')
             # trim_audio_data(start, end, "audio.wav", "cut_audio.wav")
+            # audio.export('cut_audio.wav', format="wav")
             audio.export('cut_audio.wav', format="wav")
+            st.text(audio)
             st.text('export')
             model = joblib.load('best_f1_model.pkl')
             encoder = joblib.load('best_tfvec.pkl')
             text_result = speech_to_text("cut_audio.wav")
             text_data.append(text_result)
+            st.text(text_data)
             array = model.predict_proba(encoder.transform(text_data))
             prob = array[0][0]
+            st.text(prob)
             result_dict[end] = prob
             # start += 5
             end += 5
