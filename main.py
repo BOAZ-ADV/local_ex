@@ -56,7 +56,7 @@ def main():
      pause_threshold=100.0,
     recording_color="#6aa36f",
     neutral_color="#6aa36f",
-    icon_name="volume",
+    icon_name="user",
     icon_size="3x",
 )
     if audio_bytes:
