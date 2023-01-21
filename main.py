@@ -9,7 +9,7 @@ from pydub import AudioSegment
 import STT
 from time import time, sleep
 import pandas as pd
-import math
+# import math
 
 
 text_data = []
@@ -40,19 +40,19 @@ def speech_to_text(DIR: str):
 
 #     librosa.output.write_wav(save_file, ny, sr)
 
-def chop_audio(file_path, segment_size):
-    audio_data = AudioSegment.from_wav(file_path)
-    chopped_audio = [x for x in audio_data[::segment_size]]
-    return chopped_audio
+# def chop_audio(file_path, segment_size):
+#     audio_data = AudioSegment.from_wav(file_path)
+#     chopped_audio = [x for x in audio_data[::segment_size]]
+#     return chopped_audio
 
-def trim_audio(audio_data, second):
-    second = 1
-    seconds = second * 1000
-    slice = []
-    for i in range(int(math.ceil(len(audio_data)/seconds))):
-        slice.append(audio_data[i*seconds:seconds*(i+1)])
-    #     slice.export('newSong_{}.mp3'.format(i), format="mp3")
-    return slice
+# def trim_audio(audio_data, second):
+#     second = 1
+#     seconds = second * 1000
+#     slice = []
+#     for i in range(int(math.ceil(len(audio_data)/seconds))):
+#         slice.append(audio_data[i*seconds:seconds*(i+1)])
+#     #     slice.export('newSong_{}.mp3'.format(i), format="mp3")
+#     return slice
 
 
 
@@ -77,7 +77,7 @@ def main():
         
 
         slice_num = 5
-        for i in range(math.ceil(len(text_data)/slice_num)):
+        for i in range(round(len(text_data)/slice_num)):
             text = text_data[ : slice_num*(1+i)]
             array = model.predict_proba(encoder.transform(text))
             prob = array[0][0]
