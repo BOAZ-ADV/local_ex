@@ -8,6 +8,4 @@ pandas
 joblib
 plotly
 lightgbm
-libgtk2.0-dev
-libasound2-dev
-libsndfile1-dev
+librosa==0.8.0
