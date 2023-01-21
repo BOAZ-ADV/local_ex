@@ -53,11 +53,11 @@ def main():
     st.title('👮보이스피싱 잡아라👮')
     audio_bytes = audio_recorder(
     text="Click to record",
-     pause_threshold=100.0,
-    recording_color="#6aa36f",
-    neutral_color="#909090",
-    icon_name="volumne",
-    icon_size="3x",
+     pause_threshold=100.0
+    # recording_color="#6aa36f",
+    # neutral_color="#909090",
+    # icon_name="volumne",
+    # icon_size="3x",
 )
     if audio_bytes:
         with open("audio.wav", "wb") as f:
