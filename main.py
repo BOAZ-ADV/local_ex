@@ -33,24 +33,24 @@ def main():
         text_data.append(text_result)
     
 
-    second = 0
-    model = joblib.load('best_f1_model.pkl')
-    encoder = joblib.load('best_tfvec.pkl')
-    result_dict = {}
-    array = model.predict_proba(encoder.transform(text_data))
-    prob = array[0][0]
-    second +=10
-    result_dict[second] = prob
+        second = 0
+        model = joblib.load('best_f1_model.pkl')
+        encoder = joblib.load('best_tfvec.pkl')
+        result_dict = {}
+        array = model.predict_proba(encoder.transform(text_data))
+        prob = array[0][0]
+        second +=10
+        result_dict[second] = prob
 
-    df = pd.DataFrame.from_dict([result_dict]).transpose().reset_index()
-    df.columns = ['second', 'prob']
-    fig = px.bar(pd.DataFrame(df), x='second', y='prob')
-    
-    tab1, tab2 = st.tabs(["output text", "plot"])
-    with tab1:
-        st.markdown(f'결과: {text_data}')
-    with tab2:
-        st.plotly_chart(fig, theme="None")
+        df = pd.DataFrame.from_dict([result_dict]).transpose().reset_index()
+        df.columns = ['second', 'prob']
+        fig = px.bar(pd.DataFrame(df), x='second', y='prob')
+        
+        tab1, tab2 = st.tabs(["output text", "plot"])
+        with tab1:
+            st.markdown(f'결과: {text_data}')
+        with tab2:
+            st.plotly_chart(fig, theme=None)
 
     # fig = go.Figure(go.Scatter(x = list(result_dict.keys()),y = list(result_dict.values())))
     # st.plotly_chart(fig)
