@@ -55,8 +55,8 @@ def main():
     text="Click to record",
      pause_threshold=100.0,
     recording_color="#6aa36f",
-    neutral_color="#6aa36f",
-    icon_name="user",
+    neutral_color="#909090",
+    icon_name="volumne",
     icon_size="3x",
 )
     if audio_bytes:
@@ -87,7 +87,8 @@ def main():
 
         df = pd.DataFrame.from_dict([result_dict]).transpose().reset_index()
         df.columns = ['second', 'prob']
-        fig = px.bar(pd.DataFrame(df), x='text_length', y='prob')
+        st.dataframe(df)
+        fig = px.bar(df, x='text_length', y='prob')
         
         tab1, tab2 = st.tabs(["output text", "plot"])
         with tab1:
