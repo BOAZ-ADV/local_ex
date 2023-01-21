@@ -9,6 +9,7 @@ import joblib
 import STT
 from time import time, sleep
 import pandas as pd
+import librosa
 
 text_data = []
 
@@ -17,6 +18,26 @@ def speech_to_text(DIR: str):
     sleep(5)
     result = STT.BitoGet(id)
     return result
+
+# def show_waveform(wav):
+#     y, sr = librosa.load(wav, sr=16000)
+#     time = np.linspace(0, len(y)/sr, len(y)) # time axis
+
+#     fig, ax1 = plt.subplots() # plot
+#     ax1.plot(time, y, color = 'b', label='speech waveform')
+#     ax1.set_ylabel("Amplitude") # y 축
+#     ax1.set_xlabel("Time [s]") # x 축
+#     plt.title('wave form') # 제목
+#     plt.show()
+
+def trim_audio_data(start, end, audio_file, save_file):
+    sr = 96000
+
+    y, sr = librosa.load(audio_file, sr=sr)
+
+    ny = y[sr*start :sr*end]
+
+    librosa.output.write_wav(save_file, ny, sr)
 
 
 
@@ -29,18 +50,23 @@ def main():
         with open("audio.wav", "wb") as f:
             f.write(audio_bytes)
         # st.text('recording')
-        text_result = speech_to_text("audio.wav")
-        text_data.append(text_result)
-    
+        # text_result = speech_to_text("audio.wav")
+        # text_data.append(text_result)
 
-        second = 0
-        model = joblib.load('best_f1_model.pkl')
-        encoder = joblib.load('best_tfvec.pkl')
         result_dict = {}
-        array = model.predict_proba(encoder.transform(text_data))
-        prob = array[0][0]
-        second +=10
-        result_dict[second] = prob
+        for _ in range(2):
+            start = 0
+            end = 5
+            trim_audio_data(start, end, "audio.wav", "cut_audio.wav")
+            model = joblib.load('best_f1_model.pkl')
+            encoder = joblib.load('best_tfvec.pkl')
+            text_result = speech_to_text("cut_audio.wav")
+            text_data.append(text_result)
+            array = model.predict_proba(encoder.transform(text_data))
+            prob = array[0][0]
+            result_dict[end] = prob
+            start += 5
+            end += 5
 
         df = pd.DataFrame.from_dict([result_dict]).transpose().reset_index()
         df.columns = ['second', 'prob']
@@ -49,6 +75,8 @@ def main():
         tab1, tab2 = st.tabs(["output text", "plot"])
         with tab1:
             st.markdown(f'결과: {text_data}')
+            # def show_waveform('audio.wav'):
+
         with tab2:
             st.plotly_chart(fig, theme=None)
 

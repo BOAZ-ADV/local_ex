@@ -8,3 +8,4 @@ pandas
 joblib
 plotly
 lightgbm
+librosa
