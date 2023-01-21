@@ -29,8 +29,8 @@ def main():
         with open("audio.wav", "wb") as f:
             f.write(audio_bytes)
         # st.text('recording')
-    text_result = speech_to_text("audio.wav")
-    text_data.append(text_result)
+        text_result = speech_to_text("audio.wav")
+        text_data.append(text_result)
     
 
     second = 0
