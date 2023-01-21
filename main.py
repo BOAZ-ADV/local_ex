@@ -10,7 +10,7 @@ import STT
 from time import time, sleep
 import pandas as pd
 import math
-# import librosa
+
 
 text_data = []
 
@@ -65,30 +65,25 @@ def main():
         # st.text('recording')
         # text_result = speech_to_text("audio.wav")
         # text_data.append(text_result)
-        text_data = []
+        # text_data = []
         result_dict = {}
-        # chop_audios = chop_audio('audio.wav', 5)
-        trim_audios = trim_audio('audio.wav', 5)
-        for audio in trim_audios:
-            # start = 0
-            end = 5
-            st.text('start')
-            # trim_audio_data(start, end, "audio.wav", "cut_audio.wav")
-            # audio.export('cut_audio.wav', format="wav")
-            audio.export('cut_audio.wav', format="wav")
-            st.text(audio)
-            st.text('export')
-            model = joblib.load('best_f1_model.pkl')
-            encoder = joblib.load('best_tfvec.pkl')
-            text_result = speech_to_text("cut_audio.wav")
-            text_data.append(text_result)
-            st.text(text_data)
-            array = model.predict_proba(encoder.transform(text_data))
+        text_data = speech_to_text("audio.wav")
+        st.text('stt 진행 중')
+        st.text(text_data)
+
+        st.text('call classification model & encoder')
+        model = joblib.load('best_f1_model.pkl')
+        encoder = joblib.load('best_tfvec.pkl')
+        
+
+        slice_num = 5
+        for i in range(math.ceil(len(text_data)/slice_num)):
+            text = text_data[ : slice_num*(1+i)]
+            array = model.predict_proba(encoder.transform(text))
             prob = array[0][0]
             st.text(prob)
-            result_dict[end] = prob
-            # start += 5
-            end += 5
+            result_dict[slice_num*(1+i)] = prob
+
 
         df = pd.DataFrame.from_dict([result_dict]).transpose().reset_index()
         df.columns = ['second', 'prob']
