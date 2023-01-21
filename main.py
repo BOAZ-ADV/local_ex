@@ -56,13 +56,15 @@ def main():
         # st.text('recording')
         # text_result = speech_to_text("audio.wav")
         # text_data.append(text_result)
-
+        text_data = []
         result_dict = {}
         for audio in chop_audio('audio.wav', 5):
             # start = 0
             end = 5
+            st.text('start')
             # trim_audio_data(start, end, "audio.wav", "cut_audio.wav")
             audio.export('cut_audio.wav', format="wav")
+            st.text('export')
             model = joblib.load('best_f1_model.pkl')
             encoder = joblib.load('best_tfvec.pkl')
             text_result = speech_to_text("cut_audio.wav")
