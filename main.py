@@ -3,13 +3,13 @@ from audio_recorder_streamlit import audio_recorder
 import plotly.express as px
 import joblib
 # from io import BytesIO
-# from pydub import AudioSegment
+from pydub import AudioSegment
 # import speech_recognition as sr
 
 import STT
 from time import time, sleep
 import pandas as pd
-import librosa
+# import librosa
 
 text_data = []
 
@@ -30,15 +30,19 @@ def speech_to_text(DIR: str):
 #     plt.title('wave form') # 제목
 #     plt.show()
 
-def trim_audio_data(start, end, audio_file, save_file):
-    sr = 96000
+# def trim_audio_data(start, end, audio_file, save_file):
+#     sr = 96000
 
-    y, sr = librosa.load(audio_file, sr=sr)
+#     y, sr = librosa.load(audio_file, sr=sr)
 
-    ny = y[sr*start :sr*end]
+#     ny = y[sr*start :sr*end]
 
-    librosa.output.write_wav(save_file, ny, sr)
+#     librosa.output.write_wav(save_file, ny, sr)
 
+def chop_audio(file_path, segment_size):
+    audio_data = AudioSegment.from_wav(file_path)
+    chopped_audio = [x for x in audio_data[::segment_size]]
+    return chopped_audio
 
 
 
@@ -54,10 +58,11 @@ def main():
         # text_data.append(text_result)
 
         result_dict = {}
-        for _ in range(2):
-            start = 0
+        for audio in chop_audio('audio.wav', 5):
+            # start = 0
             end = 5
-            trim_audio_data(start, end, "audio.wav", "cut_audio.wav")
+            # trim_audio_data(start, end, "audio.wav", "cut_audio.wav")
+            audio.export('cut_audio.wav')
             model = joblib.load('best_f1_model.pkl')
             encoder = joblib.load('best_tfvec.pkl')
             text_result = speech_to_text("cut_audio.wav")
@@ -65,7 +70,7 @@ def main():
             array = model.predict_proba(encoder.transform(text_data))
             prob = array[0][0]
             result_dict[end] = prob
-            start += 5
+            # start += 5
             end += 5
 
         df = pd.DataFrame.from_dict([result_dict]).transpose().reset_index()

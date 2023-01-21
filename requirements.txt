@@ -8,4 +8,3 @@ pandas
 joblib
 plotly
 lightgbm
-librosa==0.8.0
