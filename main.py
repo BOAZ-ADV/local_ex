@@ -54,10 +54,10 @@ def main():
     audio_bytes = audio_recorder(
     text="Click to record",
      pause_threshold=100.0,
-    recording_color="#e8b62c",
+    recording_color="#6aa36f",
     neutral_color="#6aa36f",
-    icon_name="user",
-    icon_size="6x",
+    icon_name="volume",
+    icon_size="3x",
 )
     if audio_bytes:
         with open("audio.wav", "wb") as f:
