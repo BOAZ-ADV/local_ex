@@ -79,7 +79,7 @@ def main():
         slice_num = 5
         for i in range(round(len(text_data)/slice_num)):
             text = text_data[ : slice_num*(1+i)]
-            array = model.predict_proba(encoder.transform(text))
+            array = model.predict_proba(encoder.transform([text]))
             prob = array[0][0]
             st.text(prob)
             result_dict[slice_num*(1+i)] = prob
