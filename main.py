@@ -9,7 +9,7 @@ from pydub import AudioSegment
 import STT
 from time import time, sleep
 import pandas as pd
-# import math
+
 
 
 text_data = []
@@ -20,16 +20,9 @@ def speech_to_text(DIR: str):
     result = STT.BitoGet(id)
     return result
 
-# def show_waveform(wav):
-#     y, sr = librosa.load(wav, sr=16000)
-#     time = np.linspace(0, len(y)/sr, len(y)) # time axis
+# def show_waveframe(wav):
 
-#     fig, ax1 = plt.subplots() # plot
-#     ax1.plot(time, y, color = 'b', label='speech waveform')
-#     ax1.set_ylabel("Amplitude") # y 축
-#     ax1.set_xlabel("Time [s]") # x 축
-#     plt.title('wave form') # 제목
-#     plt.show()
+
 
 # def trim_audio_data(start, end, audio_file, save_file):
 #     sr = 96000
@@ -58,7 +51,14 @@ def speech_to_text(DIR: str):
 
 def main():
     st.title('👮보이스피싱 잡아라👮')
-    audio_bytes = audio_recorder("Click to record", pause_threshold=100.0)
+    audio_bytes = audio_recorder(
+    text="Click to record",
+     pause_threshold=100.0,
+    recording_color="#e8b62c",
+    neutral_color="#6aa36f",
+    icon_name="user",
+    icon_size="6x",
+)
     if audio_bytes:
         with open("audio.wav", "wb") as f:
             f.write(audio_bytes)
@@ -68,8 +68,8 @@ def main():
         # text_data = []
         result_dict = {}
         text_data = speech_to_text("audio.wav")
-        st.text('stt 진행 중')
-        st.text(text_data)
+        st.text('stt 진행 중 ')
+        # st.text(text_data)
 
         st.text('call classification model & encoder')
         model = joblib.load('best_f1_model.pkl')
@@ -82,23 +82,20 @@ def main():
             array = model.predict_proba(encoder.transform([text]))
             prob = array[0][0]
             st.text(prob)
-            result_dict[slice_num*(1+i)] = prob
+            result_dict[slice_num*(1+i)] = 1 - prob #prob는 0에 가까울 수록 보이스 피싱임
 
 
         df = pd.DataFrame.from_dict([result_dict]).transpose().reset_index()
         df.columns = ['second', 'prob']
-        fig = px.bar(pd.DataFrame(df), x='second', y='prob')
+        fig = px.bar(pd.DataFrame(df), x='text_length', y='prob')
         
         tab1, tab2 = st.tabs(["output text", "plot"])
         with tab1:
             st.markdown(f'결과: {text_data}')
-            # def show_waveform('audio.wav'):
 
         with tab2:
             st.plotly_chart(fig, theme=None)
 
-    # fig = go.Figure(go.Scatter(x = list(result_dict.keys()),y = list(result_dict.values())))
-    # st.plotly_chart(fig)
 
 
 if __name__ == "__main__":
