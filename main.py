@@ -62,7 +62,7 @@ def main():
             # start = 0
             end = 5
             # trim_audio_data(start, end, "audio.wav", "cut_audio.wav")
-            audio.export('cut_audio.wav')
+            audio.export('cut_audio.wav', format="wav")
             model = joblib.load('best_f1_model.pkl')
             encoder = joblib.load('best_tfvec.pkl')
             text_result = speech_to_text("cut_audio.wav")
