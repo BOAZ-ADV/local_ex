@@ -3,15 +3,13 @@ from audio_recorder_streamlit import audio_recorder
 import plotly.express as px
 import joblib
 # from io import BytesIO
-from pydub import AudioSegment
+# from pydub import AudioSegment
 # import speech_recognition as sr
 
 import STT
 from time import time, sleep
 import pandas as pd
 from PIL import Image
-from tkinter.tix import COLUMN
-from pyparsing import empty
 
 st.set_page_config(layout="wide")
 empty1,con1,empty2 = st.columns([0.3,1.0,0.3])
@@ -32,10 +30,10 @@ def load_image(image_file):
     return img
 
 def main():
-    with empty1 : 
-        empty()
-    with empty2:
-        empty()
+    # with empty1 : 
+    #     empty()
+    # with empty2:
+    #     empty()
     with con1 :
         img = load_image('yellow.png')
         st.image(img)
