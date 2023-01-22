@@ -35,7 +35,7 @@ def main():
     #     empty()
     if 'text_data' not in st.session_state or 'prob' not in st.session_state :
         st.session_state['text_data'] = ''
-        st.session_state['prob'] = ''
+        st.session_state['prob'] = 0
 
     with con1 :
         img = load_image('yellow.png')
