@@ -33,6 +33,9 @@ def main():
     #     empty()
     # with empty2:
     #     empty()
+    if 'text_data' not in st.session_state or 'prob' not in st.session_state :
+        st.session_state['text_data'] = ''
+        st.session_state['prob'] = ''
 
     with con1 :
         img = load_image('yellow.png')
