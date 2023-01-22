@@ -8,4 +8,4 @@ pandas
 joblib
 plotly
 lightgbm
-streamlit_nested_layout
+streamlit-nested-layout
