@@ -34,6 +34,7 @@ def main():
     # with empty2:
     #     empty()
     with con1 :
+        global text_data
         img = load_image('yellow.png')
         st.image(img)
         st.title('👮보이스피싱 잡아라👮')
