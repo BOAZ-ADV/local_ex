@@ -14,8 +14,8 @@ from PIL import Image
 st.set_page_config(layout="wide")
 empty1,con1,empty2 = st.columns([0.3,1.0,0.3])
 empyt1,con2,con3,empty2 = st.columns([0.3,0.5,0.5,0.3])
-empyt1,con4,empty2 = st.columns([0.3,1.0,0.3])
-empyt1,con5,con6,empty2 = st.columns([0.3,0.5,0.5,0.3])
+# empyt1,con4,empty2 = st.columns([0.3,1.0,0.3])
+# empyt1,con5,con6,empty2 = st.columns([0.3,0.5,0.5,0.3])
 
 text_data = []
 
@@ -37,7 +37,6 @@ def main():
     with con1 :
         img = load_image('yellow.png')
         st.image(img)
-    with con2:
         st.title('👮보이스피싱 잡아라👮')
         audio_bytes = audio_recorder(
         text="Click to record",
@@ -52,11 +51,11 @@ def main():
                 f.write(audio_bytes)
 
             result_dict = {}
-            st.text('stt 진행 중')
+            st.write('stt 진행 중')
             text_data = speech_to_text("audio.wav")
 
 
-            st.text('call classification model & encoder')
+            st.write('call classification model & encoder')
             model = joblib.load('best_f1_model.pkl')
             encoder = joblib.load('best_tfvec.pkl')
             
@@ -74,13 +73,16 @@ def main():
             df.columns = ['text_length', 'prob']
             fig = px.area(df, x='text_length', y='prob', markers = True)
             
-            tab1, tab2 = st.tabs(["output text", "plot"])
-            with tab1:
-                st.markdown(f'결과: {text_data}')
-                st.text(round(1-prob,2))
+        # tab1, tab2 = st.tabs(["output text", "plot"])
+        with con2:
+            audio_file = open("audio.wav", 'rb')
+            st.audio( audio_file.read() , format='audio/wav')
 
-            with tab2:
-                st.plotly_chart(fig, theme=None)
+            st.markdown(f'결과: {text_data}')
+            st.text(round(1-prob,2))
+
+        with con3:
+            st.plotly_chart(fig, theme=None)
 
 
 
