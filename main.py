@@ -43,6 +43,7 @@ def main():
         st.image(img)
     with con4:
         st.title('👮보이스피싱 잡아라👮')
+        # st.write("[![Star](<https://img.shields.io/github/stars/><username>/<repo>.svg?logo=github&style=social)](<https://gitHub.com/><username>/<repo>)") #깃헙 추가
         audio_bytes = audio_recorder(
         text="Click to record",
         pause_threshold=100.0 # 100초 늘려야할듯..?
