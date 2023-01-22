@@ -33,9 +33,10 @@ def main():
     #     empty()
     # with empty2:
     #     empty()
-    if 'text_data' not in st.session_state or 'prob' not in st.session_state :
-        st.session_state['text_data'] = ''
-        st.session_state['prob'] = 0
+    # if 'text_data' not in st.session_state or 'prob' not in st.session_state or 'fig' not in st.session_state :
+    #     st.session_state.text_data = ''
+    #     st.session_state.prob= 0
+    #     st.session_state.fig = 
 
     with con1 :
         img = load_image('yellow.png')
@@ -73,18 +74,18 @@ def main():
 
             df = pd.DataFrame.from_dict([result_dict]).transpose().reset_index()
             df.columns = ['text_length', 'prob']
-            fig = px.area(df, x='text_length', y='prob', markers = True)
+            st.session_state.fig = px.area(df, x='text_length', y='prob', markers = True) #축 0~1로 고정하기
             
-        # tab1, tab2 = st.tabs(["output text", "plot"])
-        with con2:
-            audio_file = open("audio.wav", 'rb')
-            st.audio( audio_file.read() , format='audio/wav')
+            # tab1, tab2 = st.tabs(["output text", "plot"])
+            with con2:
+                audio_file = open("audio.wav", 'rb')
+                st.audio( audio_file.read() , format='audio/wav')
 
-            st.markdown(f'결과: {st.session_state.text_data}')
-            st.text(round(1-st.session_state.prob,2))
+                st.markdown(f'결과: {st.session_state.text_data}')
+                st.text(round(1-st.session_state.prob,2))
 
-        with con3:
-            st.plotly_chart(fig, theme=None)
+            with con3:
+                st.plotly_chart(st.session_state.fig, theme=None)
 
 
 
