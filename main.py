@@ -53,8 +53,7 @@ def main():
         if audio_bytes:
             with open("audio.wav", "wb") as f:
                 f.write(audio_bytes)
-
-            result_dict = {}
+            
             st.write('stt 진행 중')
             st.session_state.text_data = speech_to_text("audio.wav")
 
@@ -63,7 +62,7 @@ def main():
             model = joblib.load('best_f1_model.pkl')
             encoder = joblib.load('best_tfvec.pkl')
             
-
+            result_dict = {0:0}
             slice_num = 5 #slice 할 글자 수
             for i in range(round(len(st.session_state.text_data)/slice_num)):
                 text = st.session_state.text_data[ : slice_num*(1+i)]
@@ -77,14 +76,18 @@ def main():
             st.session_state.fig = px.area(df, x='text_length', y='prob', markers = True) #축 0~1로 고정하기
             
             # tab1, tab2 = st.tabs(["output text", "plot"])
-            with con2:
+        with con2:
+            st.subheader('결과보기 🔽')
+            if audio_bytes:
                 audio_file = open("audio.wav", 'rb')
                 st.audio( audio_file.read() , format='audio/wav')
 
                 st.markdown(f'결과: {st.session_state.text_data}')
                 st.text(round(1-st.session_state.prob,2))
 
-            with con3:
+        with con3:
+            st.subheader('Chart📈')
+            if audio_bytes:
                 st.plotly_chart(st.session_state.fig, theme=None)
 
 
