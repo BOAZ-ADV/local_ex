@@ -12,8 +12,10 @@ import pandas as pd
 from PIL import Image
 
 st.set_page_config(layout="wide")
-empty1,con1,con4,empty2 = st.columns([0.3,0.3,0.7,0.3])
-empyt1,con2,con3,empty2 = st.columns([0.3,0.5,0.5,0.3])
+empty1,con1,empty2 = st.columns([0.3,1,0.3])
+empty1,con3,empty2 = st.columns([0.3,1,0.3])
+empty1,con4,con5,empty2 = st.columns([0.3,0.5,0.5,0.3])
+empyt1,con6,con7,empty2 = st.columns([0.3,0.5,0.5,0.3])
 # empyt1,con4,empty2 = st.columns([0.3,1.0,0.3])
 # empyt1,con5,con6,empty2 = st.columns([0.3,0.5,0.5,0.3])
 
@@ -39,23 +41,27 @@ def main():
     #     st.session_state.fig = 
 
     with con1:
-        img = load_image('mask.png')
+        img = load_image('title.png')
         st.image(img)
+    with con3:
+        st.title('Voice Phishing Detection Algorithm 🔍')
+        # st.write("[![Star](<https://img.shields.io/github/stars/><BOAZ-ADV>/<local_ex>.svg?logo=github&style=social)](<https://gitHub.com/><BOAZ-ADV>/<local_ex>)") #깃헙 repo 링크 변경하기
     with con4:
-        st.title('👮보이스피싱 잡아라👮')
-        # st.write("[![Star](<https://img.shields.io/github/stars/><username>/<repo>.svg?logo=github&style=social)](<https://gitHub.com/><username>/<repo>)") #깃헙 추가
+        st.subheader('🔴 Click to record ')
         audio_bytes = audio_recorder(
-        text="Click to record",
-        pause_threshold=100.0 # 100초 늘려야할듯..?
+        text="",
+        pause_threshold=100.0, # 100초 늘려야할듯..?
         # recording_color="#6aa36f",
         # neutral_color="#909090",
         # icon_name="volumne",
-        # icon_size="3x",
+        icon_size="4x"
     )
+    with con5:
+        st.subheader('💡 Progress')
         if audio_bytes:
             with open("audio.wav", "wb") as f:
                 f.write(audio_bytes)
-            
+            st.write('STOP Recording')
             st.write('stt 진행 중')
             st.session_state.text_data = speech_to_text("audio.wav")
 
@@ -76,19 +82,21 @@ def main():
             df = pd.DataFrame.from_dict([result_dict]).transpose().reset_index()
             df.columns = ['text_length', 'prob']
             st.session_state.fig = px.area(df, x='text_length', y='prob', markers = True) #축 0~1로 고정하기
+            st.session_state.fig.update_layout(paper_bgcolor = "white")
+            st.session_state.fig.update_yaxes(range=[0,1])
             
             # tab1, tab2 = st.tabs(["output text", "plot"])
-        with con2:
-            st.subheader('결과보기 🔽')
+        with con6:
+            st.subheader('🔽 결과보기 ')
             if audio_bytes:
                 audio_file = open("audio.wav", 'rb')
                 st.audio( audio_file.read() , format='audio/wav')
 
-                st.markdown(f'결과: {st.session_state.text_data}')
+                st.code(f'📝: {st.session_state.text_data}')
                 st.text(round(1-st.session_state.prob,2))
 
-        with con3:
-            st.subheader('Chart📈')
+        with con7:
+            st.subheader('📊 Chart')
             if audio_bytes:
                 st.plotly_chart(st.session_state.fig, theme=None)
 
