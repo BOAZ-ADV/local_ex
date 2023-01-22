@@ -12,7 +12,7 @@ import pandas as pd
 from PIL import Image
 
 st.set_page_config(layout="wide")
-empty1,con1,empty2 = st.columns([0.3,1.0,0.3])
+empty1,con1,con4,empty2 = st.columns([0.3,0.3,0.7,0.3])
 empyt1,con2,con3,empty2 = st.columns([0.3,0.5,0.5,0.3])
 # empyt1,con4,empty2 = st.columns([0.3,1.0,0.3])
 # empyt1,con5,con6,empty2 = st.columns([0.3,0.5,0.5,0.3])
@@ -38,9 +38,10 @@ def main():
     #     st.session_state.prob= 0
     #     st.session_state.fig = 
 
-    with con1 :
-        img = load_image('yellow.png')
+    with con1:
+        img = load_image('mask.png')
         st.image(img)
+    with con4:
         st.title('👮보이스피싱 잡아라👮')
         audio_bytes = audio_recorder(
         text="Click to record",
