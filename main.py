@@ -17,7 +17,6 @@ empyt1,con2,con3,empty2 = st.columns([0.3,0.5,0.5,0.3])
 # empyt1,con4,empty2 = st.columns([0.3,1.0,0.3])
 # empyt1,con5,con6,empty2 = st.columns([0.3,0.5,0.5,0.3])
 
-text_data = []
 
 def speech_to_text(DIR: str):
     id = STT.BitoPost(DIR)
@@ -47,6 +46,7 @@ def main():
         # icon_size="3x",
     )
         if audio_bytes:
+            global text_data
             with open("audio.wav", "wb") as f:
                 f.write(audio_bytes)
 
