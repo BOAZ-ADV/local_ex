@@ -78,7 +78,7 @@ def main():
         audio_file = open("audio.wav", 'rb')
         st.audio( audio_file.read() , format='audio/wav')
 
-        st.markdown(f'결과: {text_data}')
+        # st.markdown(f'결과: {text_data}')
         st.text(round(1-prob,2))
 
     with con3:
