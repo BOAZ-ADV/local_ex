@@ -33,8 +33,7 @@ def main():
     #     empty()
     # with empty2:
     #     empty()
-    global text_data
-    global prob
+
     with con1 :
         img = load_image('yellow.png')
         st.image(img)
@@ -53,7 +52,7 @@ def main():
 
             result_dict = {}
             st.write('stt 진행 중')
-            text_data = speech_to_text("audio.wav")
+            st.session_state.text_data = speech_to_text("audio.wav")
 
 
             st.write('call classification model & encoder')
@@ -62,11 +61,11 @@ def main():
             
 
             slice_num = 5 #slice 할 글자 수
-            for i in range(round(len(text_data)/slice_num)):
-                text = text_data[ : slice_num*(1+i)]
+            for i in range(round(len(st.session_state.text_data)/slice_num)):
+                text = st.session_state.text_data[ : slice_num*(1+i)]
                 array = model.predict_proba(encoder.transform([text]))
-                prob = array[0][0]
-                result_dict[slice_num*(1+i)] = 1 - prob #prob는 0에 가까울 수록 보이스 피싱임?
+                st.session_state.prob = array[0][0]
+                result_dict[slice_num*(1+i)] = 1 - st.session_state.prob #prob는 0에 가까울 수록 보이스 피싱임?
 
 
             df = pd.DataFrame.from_dict([result_dict]).transpose().reset_index()
@@ -78,8 +77,8 @@ def main():
             audio_file = open("audio.wav", 'rb')
             st.audio( audio_file.read() , format='audio/wav')
 
-            st.markdown(f'결과: {text_data}')
-            st.text(round(1-prob,2))
+            st.markdown(f'결과: {st.session_state.text_data}')
+            st.text(round(1-st.session_state.prob,2))
 
         with con3:
             st.plotly_chart(fig, theme=None)
