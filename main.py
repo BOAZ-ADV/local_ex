@@ -66,7 +66,6 @@ def main():
                 text = text_data[ : slice_num*(1+i)]
                 array = model.predict_proba(encoder.transform([text]))
                 prob = array[0][0]
-                st.text(prob)
                 result_dict[slice_num*(1+i)] = 1 - prob #prob는 0에 가까울 수록 보이스 피싱임?
 
 
@@ -75,15 +74,15 @@ def main():
             fig = px.area(df, x='text_length', y='prob', markers = True)
             
         # tab1, tab2 = st.tabs(["output text", "plot"])
-    with con2:
-        audio_file = open("audio.wav", 'rb')
-        st.audio( audio_file.read() , format='audio/wav')
+        with con2:
+            audio_file = open("audio.wav", 'rb')
+            st.audio( audio_file.read() , format='audio/wav')
 
-        # st.markdown(f'결과: {text_data}')
-        st.text(round(1-prob,2))
+            st.markdown(f'결과: {text_data}')
+            st.text(round(1-prob,2))
 
-    with con3:
-        st.plotly_chart(fig, theme=None)
+        with con3:
+            st.plotly_chart(fig, theme=None)
 
 
 
