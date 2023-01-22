@@ -46,7 +46,6 @@ def main():
         # icon_size="3x",
     )
         if audio_bytes:
-            global text_data
             with open("audio.wav", "wb") as f:
                 f.write(audio_bytes)
 
@@ -74,15 +73,15 @@ def main():
             fig = px.area(df, x='text_length', y='prob', markers = True)
             
         # tab1, tab2 = st.tabs(["output text", "plot"])
-        with con2:
-            audio_file = open("audio.wav", 'rb')
-            st.audio( audio_file.read() , format='audio/wav')
+    with con2:
+        audio_file = open("audio.wav", 'rb')
+        st.audio( audio_file.read() , format='audio/wav')
 
-            st.markdown(f'결과: {text_data}')
-            st.text(round(1-prob,2))
+        st.markdown(f'결과: {text_data}')
+        st.text(round(1-prob,2))
 
-        with con3:
-            st.plotly_chart(fig, theme=None)
+    with con3:
+        st.plotly_chart(fig, theme=None)
 
 
 
