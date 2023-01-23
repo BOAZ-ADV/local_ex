@@ -11,7 +11,7 @@ import STT
 from time import time, sleep
 import pandas as pd
 from PIL import Image
-# import streamlit_nested_layout
+import streamlit_nested_layout
 
 st.set_page_config(layout="wide")
 empty1,con1,empty2 = st.columns([0.3,1,0.3])
@@ -108,13 +108,14 @@ def main():
                     else:
                         st.image(Image.open('green.png'), width = 100)
                 with col2:
-                    st.title(f'{result_prob*100}%')
-                    # if result_prob > 0.7:
-                    #     st.write("보이스피싱 위험")
-                    # elif result_prob > 0.3:
-                    #     st.write("보이스피싱 경고")
-                    # else:        
-                    #     st.write("보이스피싱 안전")
+                    # st.title(f'{result_prob*100}%')
+                    if result_prob > 0.7:
+                        st.subheader(f"보이스피싱 확률이 {result_prob*100}% 으로 위험")
+                    elif result_prob > 0.3:
+                        st.title(f"보이스피싱 확률이 {result_prob*100}% 으로 경고")
+                    else:        
+                        st.title(f"보이스피싱 확률이 {result_prob*100}% 으로 안전")
+
 
                     # st.markdown("""
                     # <style>

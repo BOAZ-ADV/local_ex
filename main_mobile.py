@@ -16,7 +16,7 @@ from PIL import Image
 st.set_page_config(layout="wide")
 empty1,con1,empty2 = st.columns([0.3,1,0.3])
 empty1,con3,empty2 = st.columns([0.3,1,0.3])
-empty1,con4,empty2 = st.columns([0.3,0.5,0.5,0.3])
+empty1,con4,empty2 = st.columns([0.3,1,0.3])
 empyt1,con5,empty2 = st.columns([0.3,1,0.3])
 empty1,con6,empty2 = st.columns([0.3,1,0.3])
 empyt1,con7,con8,empty2 = st.columns([0.3,0.3,0.7,0.3])
@@ -111,13 +111,14 @@ def main():
                 else:
                     st.image(Image.open('green.png'), width = 100)
             with con8:
+                result_prob = round(1-st.session_state.prob,3)
                 # st.title(f'{result_prob*100}%')
                 if result_prob > 0.7:
                     st.subheader(f"보이스피싱 확률이 {result_prob*100}% 으로 위험")
                 elif result_prob > 0.3:
-                    st.title("보이스피싱 확률이 {result_prob*100}% 으로 경고")
+                    st.title(f"보이스피싱 확률이 {result_prob*100}% 으로 경고")
                 else:        
-                    st.title("보이스피싱 확률이 {result_prob*100}% 으로 안전")
+                    st.title(f"보이스피싱 확률이 {result_prob*100}% 으로 안전")
 
                     # st.markdown("""
                     # <style>
