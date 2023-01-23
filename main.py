@@ -11,7 +11,7 @@ import STT
 from time import time, sleep
 import pandas as pd
 from PIL import Image
-import streamlit_nested_layout
+# import streamlit_nested_layout
 
 st.set_page_config(layout="wide")
 empty1,con1,empty2 = st.columns([0.3,1,0.3])
