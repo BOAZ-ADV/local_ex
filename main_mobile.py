@@ -83,7 +83,10 @@ def main():
                 array = model.predict_proba(encoder.transform([text]))
                 st.session_state.prob = array[0][0]
                 result_dict[slice_num*(1+i)] = 1 - st.session_state.prob #prob는 0에 가까울 수록 보이스 피싱임?
-            st.markdown('🍀 **Finish**')
+            if st.session_state.prob:
+                st.markdown('🍀 **Finish**')
+            else:
+                st.markdown('💥 **Fail**')
 
             df = pd.DataFrame.from_dict([result_dict]).transpose().reset_index()
             df.columns = ['Text Length', 'Voice Phishing Probabilty']
