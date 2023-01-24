@@ -28,6 +28,6 @@
     row-gap :0px;
     background-color : #ffe642;
 }
-[data-testid="stVerticalBlock"]{
+/* [data-testid="stVerticalBlock"]{
     row-gap :0px;
-}
+} */
