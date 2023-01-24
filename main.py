@@ -84,25 +84,8 @@ def main():
                 st.session_state.prob = array[0][0]
                 result_dict[slice_num*(1+i)] = 1 - st.session_state.prob #prob는 0에 가까울 수록 보이스 피싱임?
             st.markdown('🍀 Finish')
-
-            df = pd.DataFrame.from_dict([result_dict]).transpose().reset_index()
-            df.columns = ['Text Length', 'Probabilty']
-            result_prob = round(1-st.session_state.prob,3)
-            # area plot 색깔 지정
-            if result_prob > 0.7:
-                color = "red"
-            elif result_prob > 0.3:
-                color = "orange"
-            else:
-                color = "green"
-            df['color'] = color
-            st.session_state.fig = px.area(df, x='Text Length', y='Probabilty', markers=True, color="color", color_discrete_sequence=[color]) 
-            st.session_state.fig.update_layout(
-                                        paper_bgcolor = "white",
-                                        showlegend=False)
-            #y축 0~1고정
-            st.session_state.fig.update_yaxes(range=[0,1])
-            st.session_state.fig.update_yaxes(title_text = "")
+            st.session_state.df = pd.DataFrame.from_dict([result_dict]).transpose().reset_index()
+            st.session_state.df.columns = ['Text Length', 'Probabilty']
 
         with con6:
             st.subheader('📝 결과보기 ')
@@ -123,15 +106,6 @@ def main():
                 else:        
                     st.subheader(f"📢 보이스피싱 확률이 {result_prob*100}% 입니다.")
 
-
-                    # st.markdown("""
-                    # <style>
-                    # .big-font {font-size:70px ;}
-                    # </style>
-                    # """, unsafe_allow_html=True)
-                    # st.markdown(f'<p class="big-font">{result_prob*100}%</p>', unsafe_allow_html=True)
-                    
-
                 audio_file = open("audio.wav", 'rb')
                 st.audio( audio_file.read() , format='audio/wav')
                 # local_css("style.css")
@@ -142,7 +116,35 @@ def main():
         with con7:
             st.subheader('📊 Voice Phishing Probabilty')
             if audio_bytes:
+                result_prob = round(1-st.session_state.prob,3)
+                # area plot 색깔 지정
+                if result_prob > 0.7:
+                    color = "red"
+                elif result_prob > 0.3:
+                    color = "orange"
+                else:
+                    color = "green"
+                st.session_state.df['color'] = color
+                size = 500
+                st.session_state.fig = px.area(st.session_state.df, x='Text Length', y='Probabilty', markers=True, color="color", color_discrete_sequence=[color],width=size, height=400) 
+                st.session_state.fig.update_layout(
+                                            paper_bgcolor = "white",
+                                            showlegend=False)
+                st.session_state.fig.update_yaxes(range=[0,1])
+                st.session_state.fig.update_yaxes(title_text = "")
+
                 st.plotly_chart(st.session_state.fig, theme = "streamlit")
+
+            else:
+                st.markdown("""  
+
+<br>
+<br>
+<br>
+<br/>
+<br/>
+<br/>
+ """,unsafe_allow_html=True)
 
 
 
