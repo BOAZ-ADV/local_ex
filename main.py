@@ -102,7 +102,7 @@ def main():
                                         showlegend=False)
             #y축 0~1고정
             st.session_state.fig.update_yaxes(range=[0,1])
-            st.session_state.fig.update_xaxes(title_text = "")
+            st.session_state.fig.update_yaxes(title_text = "")
 
         with con6:
             st.subheader('📝 결과보기 ')
