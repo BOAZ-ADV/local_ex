@@ -19,7 +19,7 @@ empty1,con3,empty2 = st.columns([0.3,1,0.3])
 empty1,con4,empty2 = st.columns([0.3,1,0.3])
 empyt1,con5,empty2 = st.columns([0.3,1,0.3])
 empty1,con6,empty2 = st.columns([0.3,1,0.3])
-empyt1,con7,con8,empty2 = st.columns([0.3,0.3,0.7,0.3])
+empyt1,con7,con8,empty2 = st.columns([0.3,0.2,0.8,0.3])
 empyt1,con9,empty2 = st.columns([0.3,1,0.3])
 empyt1,con10,empty2 = st.columns([0.3,1,0.3])
 
@@ -42,13 +42,13 @@ def main():
     #     empty()
     # with empty2:
     #     empty()
-    # local_css("style.css")
+    local_css("style.css")
     with con1:
         img = Image.open('title.png')
         st.image(img)
 
     with con3:
-        st.title('Voice Phishing Detection Algorithm 🔍')
+        st.subheader('Voice Phishing Detection Algorithm 🔍')
         # st.write("[![Star](<https://img.shields.io/github/stars/><BOAZ-ADV>/<local_ex>.svg?logo=github&style=social)](<https://gitHub.com/><BOAZ-ADV>/<local_ex>)") #깃헙 repo 링크 변경하기
     with con4:
         st.subheader('🔴 Click to record ')
@@ -58,7 +58,7 @@ def main():
         # recording_color="#6aa36f",
         # neutral_color="#909090",
         # icon_name="volumne",
-        icon_size="4x"
+        icon_size="3x"
     )
     with con5:
         st.subheader('💡 Progress')
@@ -70,7 +70,8 @@ def main():
             try:
                 st.session_state.text_data = speech_to_text("audio.wav")
             except:
-                st.markdown('❗ STT 변환 실패 다시 녹음하세요')
+                st.markdown('❗ **STT 변환 실패 다시 녹음하세요**')
+
 
             st.markdown('🔧 **Call Classification Model & Encoder**')
             model = joblib.load('best_f1_model.pkl')
@@ -107,20 +108,12 @@ def main():
             with con7:
                 result_prob = round(1-st.session_state.prob,3)
                 if result_prob > 0.7:
-                    st.image(Image.open('red.png'), width = 100)
+                    st.image(Image.open('red.png'))
                 elif result_prob > 0.3:
-                    st.image(Image.open('yellow.png'), width = 100)
+                    st.image(Image.open('yellow.png'))
                 else:
-                    st.image(Image.open('green.png'), width = 100)
-            with con8:
-                result_prob = round(1-st.session_state.prob,3)
-                # st.title(f'{result_prob*100}%')
-                if result_prob > 0.7:
-                    st.subheader(f"보이스피싱 확률이 {result_prob*100}% 으로 위험")
-                elif result_prob > 0.3:
-                    st.title(f"보이스피싱 확률이 {result_prob*100}% 으로 경고")
-                else:        
-                    st.title(f"보이스피싱 확률이 {result_prob*100}% 으로 안전")
+                    st.image(Image.open('green.png'))
+
 
                     # st.markdown("""
                     # <style>
@@ -130,6 +123,15 @@ def main():
                     # st.markdown(f'<p class="big-font">{result_prob*100}%</p>', unsafe_allow_html=True)
                     
             with con9:
+                result_prob = round(1-st.session_state.prob,3)
+
+                if result_prob > 0.7:
+                    st.subheader(f"📢 보이스피싱 확률이 {result_prob*100}% 입니다.")
+                elif result_prob > 0.3:
+                    st.subheader(f"📢 보이스피싱 확률이 {result_prob*100}% 입니다.")
+                else:        
+                    st.subheader(f"📢 보이스피싱 확률이 {result_prob*100}% 입니다.")
+
                 audio_file = open("audio.wav", 'rb')
                 st.audio( audio_file.read() , format='audio/wav')
                 # local_css("style.css")
