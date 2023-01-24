@@ -72,7 +72,7 @@ def main():
                 raise
 
             st.markdown('🔧 Call Classification Model & Encoder')
-            model = joblib.load('best_f1_model(lgb,sr_rd2).pkl')
+            model = joblib.load('best_f1_model.pkl')
             encoder = joblib.load('best_tfvec.pkl')
             
             st.session_state.prob=1
@@ -92,7 +92,7 @@ def main():
             if result_prob > 0.7:
                 color = "red"
             elif result_prob > 0.3:
-                color = "yellow"
+                color = "orange"
             else:
                 color = "green"
             df['color'] = color
