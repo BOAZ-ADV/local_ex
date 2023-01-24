@@ -86,6 +86,16 @@ def main():
             st.markdown('🍀 Finish')
             st.session_state.df = pd.DataFrame.from_dict([result_dict]).transpose().reset_index()
             st.session_state.df.columns = ['Text Length', 'Probabilty']
+        
+        else:
+            st.markdown("""  
+            <br>
+            <br>
+            <br>
+            <br/>
+            <br/>
+            <br/>
+            """,unsafe_allow_html=True)
 
         with con6:
             st.subheader('📝 결과보기 ')
@@ -137,14 +147,13 @@ def main():
 
             else:
                 st.markdown("""  
-
-<br>
-<br>
-<br>
-<br/>
-<br/>
-<br/>
- """,unsafe_allow_html=True)
+                <br>
+                <br>
+                <br>
+                <br/>
+                <br/>
+                <br/>
+                """,unsafe_allow_html=True)
 
 
 
