@@ -92,6 +92,10 @@ def main():
             <br>
             <br>
             <br>
+            <br>
+            <br>
+            <br/>
+            <br/>
             <br/>
             <br/>
             <br/>
@@ -128,18 +132,22 @@ def main():
             if audio_bytes:
                 result_prob = round(1-st.session_state.prob,3)
                 # area plot 색깔 지정
+                color_dict={'위험':'red',
+                        '경고':'orange',
+                        '안전':'green'}
                 if result_prob > 0.7:
-                    color = "red"
+                    state = "위험"
                 elif result_prob > 0.3:
-                    color = "orange"
+                    state = "경고"
                 else:
-                    color = "green"
-                st.session_state.df['color'] = color
+                    state = "안전"
+                st.session_state.df['state'] = state
                 size = 500
-                st.session_state.fig = px.area(st.session_state.df, x='Text Length', y='Probabilty', markers=True, color="color", color_discrete_sequence=[color],width=size, height=400) 
+                st.session_state.fig = px.area(st.session_state.df, x='Text Length', y='Probabilty', markers=True, color="state", color_discrete_sequence=[color_dict[state],],width=size, height=400) 
                 st.session_state.fig.update_layout(
                                             paper_bgcolor = "white",
                                             showlegend=False)
+                # st.session_state.fig.update_traces(hovertemplate='%{y}')
                 st.session_state.fig.update_yaxes(range=[0,1])
                 st.session_state.fig.update_yaxes(title_text = "")
 
@@ -150,6 +158,10 @@ def main():
                 <br>
                 <br>
                 <br>
+                <br>
+                <br>
+                <br/>
+                <br/>
                 <br/>
                 <br/>
                 <br/>
