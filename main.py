@@ -72,7 +72,7 @@ def main():
                 raise
 
             st.markdown('🔧 Call Classification Model & Encoder')
-            model = joblib.load('best_f1_model.pkl')
+            model = joblib.load('best_f1_model(lgb,sr_rd2).pkl')
             encoder = joblib.load('best_tfvec.pkl')
             
             st.session_state.prob=1
