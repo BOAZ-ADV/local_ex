@@ -91,12 +91,6 @@ def main():
             st.markdown("""  
             <br>
             <br>
-            <br>
-            <br>
-            <br>
-            <br/>
-            <br/>
-            <br/>
             <br/>
             <br/>
             """,unsafe_allow_html=True)
@@ -157,12 +151,6 @@ def main():
                 st.markdown("""  
                 <br>
                 <br>
-                <br>
-                <br>
-                <br>
-                <br/>
-                <br/>
-                <br/>
                 <br/>
                 <br/>
                 """,unsafe_allow_html=True)
