@@ -7,5 +7,5 @@ streamlit_webrtc==0.34.2
 pandas
 joblib
 plotly
-lightgbm==2.2.3
+lightgbm
 streamlit-nested-layout
