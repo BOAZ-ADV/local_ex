@@ -46,12 +46,12 @@ def main():
 
     with con3:
         st.title('Voice Phishing Detection Algorithm 🔍')
-        # st.write("[![Star](<https://img.shields.io/github/stars/><BOAZ-ADV>/<local_ex>.svg?logo=github&style=social)](<https://gitHub.com/><BOAZ-ADV>/<local_ex>)") #깃헙 repo 링크 변경하기
+        st.markdown('💖모바일로 접속한 경우 마이크를 **한 번 더 클릭**하여 녹음을 진행하세요')
     with con4:
         st.subheader('🔴 Click to record ')
         audio_bytes = audio_recorder(
         text="",
-        pause_threshold=10.0, # 100초 늘려야할듯..?
+        pause_threshold=500.0, # 100초 늘려야할듯..?
         # recording_color="#6aa36f",
         # neutral_color="#909090",
         # icon_name="volumne",
