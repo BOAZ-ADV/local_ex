@@ -51,7 +51,7 @@ def main():
         st.subheader('🔴 Click to record ')
         audio_bytes = audio_recorder(
         text="",
-        pause_threshold=100.0, # 100초 늘려야할듯..?
+        pause_threshold=500.0, # 100초 늘려야할듯..?
         # recording_color="#6aa36f",
         # neutral_color="#909090",
         # icon_name="volumne",
